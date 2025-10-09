@@ -1,10 +1,10 @@
-package com.trading_data_managment_app;
+package com.treasurex;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class TradingDataManagmentAppApplicationTests {
+class TreasurexAppApplicationTests {
 
 	@Test
 	void contextLoads() {

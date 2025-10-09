@@ -23,6 +23,7 @@ com\treasurex\login_service\entity\User.class
 com\treasurex\login_service\dto\LoginRequest.class
 com\treasurex\login_service\dto\ResetPasswordRequest.class
 com\treasurex\login_service\dto\ChangePasswordRequest.class
+com\treasurex\login_service\dto\UserIdCheckRequest.class
 com\treasurex\login_service\dto\ForgotPasswordRequest.class
 com\treasurex\login_service\dto\RegisterStartRequest.class
 com\treasurex\login_service\dto\RememberUserIdRequest$RememberUserIdRequestBuilder.class
