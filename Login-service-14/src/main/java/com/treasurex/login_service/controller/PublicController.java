@@ -18,6 +18,7 @@ import com.treasurex.login_service.dto.RegisterSecurityQuestionsRequest;
 import com.treasurex.login_service.dto.RegisterStartRequest;
 import com.treasurex.login_service.dto.RememberUserIdRequest;
 import com.treasurex.login_service.dto.ResetPasswordRequest;
+import com.treasurex.login_service.dto.UserIdCheckRequest;
 import com.treasurex.login_service.dto.UserVerifyRequest;
 import com.treasurex.login_service.dto.VerifySecurityAnswerRequest;
 import com.treasurex.login_service.exception.InvalidCredentialsException;
@@ -55,6 +56,15 @@ public class PublicController {
 		if (!registerStartRequest.getPassword().equals(registerStartRequest.getConfirmPassword())) {
 			throw new InvalidCredentialsException("Password and Confirm Password do not match");
 		}
+		// Check if userId is available
+	    boolean isUserIdAvailable = userService.isUserIdAvailable(registerStartRequest.getUserId());
+	    if (!isUserIdAvailable) {
+	        ApiResponse apiResponse = ApiResponse.builder()
+	            .status("USER_ID_TAKEN")
+	            .message("The userId `" + registerStartRequest.getUserId() + "` is already taken")
+	            .build();
+	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
+	    }
 		String result = userService.registerStart(registerStartRequest);
 		ApiResponse apiResponse = ApiResponse.builder().status("SUCCESS").message(result).nextStep("Verify-user")
 				.build();
@@ -199,4 +209,19 @@ public class PublicController {
 		ApiResponse apiResponse = ApiResponse.builder().status("SUCCESS").message(result).build();
 		return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
 	}
+
+	// --------------------new change implements userId suggestion feature
+	@Operation(summary = "Check if User ID is available", description = "Validates whether a userId is already taken or available for registration")
+	@PostMapping("/check-userId")
+	@CrossOrigin(origins = "http://127.0.0.1:5500")
+	public ResponseEntity<ApiResponse> checkUserIdAvailability(@Valid @RequestBody UserIdCheckRequest request) {
+		boolean isAvailable = userService.isUserIdAvailable(request.getUserId());
+		String message = isAvailable ? "User ID is available" : "User ID is already taken";
+
+		ApiResponse apiResponse = ApiResponse.builder().status(isAvailable ? "AVAILABLE" : "TAKEN").message(message)
+				.data(Map.of("userId", request.getUserId(), "available", isAvailable)).build();
+
+		return ResponseEntity.ok(apiResponse);
+	}
+
 }

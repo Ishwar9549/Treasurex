@@ -78,4 +78,9 @@ public interface UserService {
 	 * Changes password if the old password is correct (no OTP required).
 	 */
 	String changePassword(ChangePasswordRequest changePasswordRequest);
+	
+	/**
+	 * Checking user Id is available or not.
+	 */
+	boolean isUserIdAvailable(String userId);
 }

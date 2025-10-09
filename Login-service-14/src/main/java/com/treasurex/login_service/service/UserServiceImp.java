@@ -368,4 +368,10 @@ public class UserServiceImp implements UserService {
 					.orElseThrow(() -> new ResourceNotFoundException("User not found with User ID: " + loginId));
 		}
 	}
+	// --------------------new change implements userId suggestion feature
+	@Override
+	public boolean isUserIdAvailable(String userId) {
+	    return !userRepository.existsByUserId(userId.trim().toLowerCase());
+	}
+
 }
