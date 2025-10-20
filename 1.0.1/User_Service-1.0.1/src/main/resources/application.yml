@@ -1,0 +1,43 @@
+server:
+  port: 9090
+
+spring:
+  application:
+    name: User-Service-1.0.1
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/Treasurex_1?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: imnavi9999@gmail.com
+    password: axlo gwlk pxjx rjmt
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+treasurex:
+  jwt:
+    secret_key: "uN7t8k2pBqQ9yD4xLrC6vE0jZ5sF3wX1mT8oR2lV7nP4cA9hJ3yG6bM5dQ0zK8sW"
+    registration:
+      expiry-minutes: 15
+    access:
+      expiry-minutes: 60
+      
+
+
+
