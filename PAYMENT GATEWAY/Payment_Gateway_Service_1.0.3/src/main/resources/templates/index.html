@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Treasurex Subscription</title>
+
+	<!-- Bootstrap CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			width: 100vw;
+			height: 100vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			background-color: #f8f9fa;
+			font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+		}
+
+		.container {
+			width: 450px;
+			border-radius: 12px;
+			box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+			background: #fff;
+			padding: 30px;
+		}
+
+		h1 {
+			text-align: center;
+			margin-bottom: 25px;
+			color: #333;
+		}
+
+		.form-label {
+			font-weight: 600;
+		}
+
+		.btn-primary {
+			width: 100%;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="container">
+		<h1>Treasurex Subscription</h1>
+
+		<form id="subscriptionForm">
+			<div class="mb-3">
+				<label for="email" class="form-label">Email Address</label>
+				<input type="email" class="form-control" id="email" name="email" placeholder="Enter your email"
+					required>
+			</div>
+
+			<div class="mb-3">
+				<label for="subscriptionType" class="form-label">Subscription Type</label>
+				<select class="form-select" id="subscriptionType" name="subscriptionType" required>
+					<option value="">Select Plan</option>
+					<option value="FREE">Free</option>
+					<option value="SILVER">Silver</option>
+					<option value="GOLD">Gold</option>
+					<option value="PLATINUM">Platinum</option>
+					<option value="PRIME">Prime</option>
+				</select>
+			</div>
+
+			<div class="mb-3">
+				<label for="amount" class="form-label">Amount (₹)</label>
+				<input type="number" class="form-control" id="amount" name="amount" placeholder="Enter amount" readonly>
+			</div>
+
+			<button type="submit" class="btn btn-primary" id="rzp-btn1">Proceed to Pay</button>
+		</form>
+	</div>
+
+	<!-- Razorpay JS -->
+	<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+	<!-- Bootstrap JS Bundle -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+		</script>
+
+	<script>
+		// Auto-fill amount based on subscription type
+		const amountField = document.getElementById('amount');
+		const typeSelect = document.getElementById('subscriptionType');
+
+		typeSelect.addEventListener('change', function () {
+			switch (this.value) {
+				case 'FREE':
+					amountField.value = 0;
+					break;
+				case 'SILVER':
+					amountField.value = 199;
+					break;
+				case 'GOLD':
+					amountField.value = 499;
+					break;
+				case 'PLATINUM':
+					amountField.value = 999;
+					break;
+				case 'PRIME':
+					amountField.value = 1499;
+					break;
+				default:
+					amountField.value = '';
+			}
+		});
+
+		// For now, prevent actual submission
+		document.getElementById('subscriptionForm').addEventListener('submit', function (e) {
+			e.preventDefault();
+			alert("Subscription selected: " + typeSelect.value + "\nAmount: ₹" + amountField.value);
+		});
+	</script>
+
+	<script>
+		async function createOrder() {
+
+			console.log("------- Order Creation started -----");
+
+			const response = await fetch('http://localhost:9090/create-order', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					email: document.getElementById('email').value,
+					subscriptionType: document.getElementById('subscriptionType').value,
+					amount: document.getElementById('amount').value,
+					currency: "INR"
+				})
+			});
+
+			const order = await response.json();
+			console.log("---------order creation complited----");
+			return order;
+		}
+
+		document.getElementById("rzp-btn1").onclick = async function (e) {
+
+			const order = await createOrder();
+
+			console.log(order);
+
+			var options = {
+				"key": "rzp_test_RWu7WwWwg3nhHn",
+				"amount": order.amount,
+				"currency": "INR",
+				"Name": "ISHWAR MUNNOLLI",
+				"description": "Subscription Amount",
+				"order_id": order.razorpayOrderId,
+				"receipt": order.email,
+				"callback_url": "http://localhost:9090/handle-payment-callback",
+				"prefill": {
+					"name": order.name,
+					"email": order.email
+				},
+				"theme": {
+					"color": "#3399cc"
+				}
+			};
+
+			var rzp1 = new Razorpay(options);
+
+			rzp1.open();
+
+			e.preventDefault();
+		}
+	</script>
+</body>
+
+</html>

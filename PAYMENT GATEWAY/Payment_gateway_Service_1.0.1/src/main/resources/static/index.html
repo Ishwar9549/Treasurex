@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Razorpay Payment Test</title>
+</head>
+
+<body>
+	<h2>Test Razorpay Payment</h2>
+	<button id="pay-button">Pay Now</button>
+
+	<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+	<script>
+		document.getElementById('pay-button').onclick = function () {
+			fetch('http://localhost:9093/payments/createOrder?amount=1000&currency=INR', {
+				method: 'POST'
+			})
+				.then(response => response.json())
+				.then(order => {
+					const options = {
+						key: "rzp_test_RWu7WwWwg3nhHn", // your Razorpay test key
+						amount: order.amount,
+						currency: order.currency,
+						name: "Green Tree Enterprises",
+						description: "Test Transaction",
+						order_id: order.id,
+						handler: function (response) {
+							alert("Payment Successful!\nPayment ID: " + response.razorpay_payment_id);
+						},
+						theme: {
+							color: "#3399cc"
+						}
+					};
+					const rzp = new Razorpay(options);
+					rzp.open();
+				})
+				.catch(err => console.error("Error creating order:", err));
+		};
+	</script>
+</body>
+
+</html>
