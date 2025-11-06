@@ -10,9 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class VerifySecurityAnswerRequest {
 
-	//@NotBlank(message = "Login ID (User ID / Email / Phone) cannot be blank")
-	//private String loginId;
-
 	@NotBlank(message = "security Answer cannot be blank")
 	private String securityAnswer;
 }

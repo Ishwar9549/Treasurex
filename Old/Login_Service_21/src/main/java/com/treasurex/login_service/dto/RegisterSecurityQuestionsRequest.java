@@ -16,8 +16,6 @@ import java.util.List;
 @Builder
 public class RegisterSecurityQuestionsRequest {
 
-	//@NotBlank(message = "Login ID (User ID / Email / Phone) cannot be blank")
-	//private String loginId;
 
 	@NotEmpty(message = "Security questions list cannot be empty")
 	@Valid

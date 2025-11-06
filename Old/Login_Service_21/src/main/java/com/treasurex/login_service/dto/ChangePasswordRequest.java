@@ -13,9 +13,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ChangePasswordRequest {
 
-	// @NotBlank(message = "Login ID (User ID / Email / Phone) cannot be blank")
-	// private String loginId;
-
 	@NotBlank(message = "old Password cannot be blank")
 	private String oldPassword;
 

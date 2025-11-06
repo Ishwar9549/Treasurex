@@ -201,18 +201,30 @@ public class PublicController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(userService.isUserIdAvailable(request));
 	}
 
+	/*
+	 * Set MPIN for user
+	 */
+	@Operation(summary = "Set MPIN for the user", description = "Sets a 4-digit MPIN using the Authorization token.")
 	@PostMapping("/set-mpin")
 	public ResponseEntity<ApiResponse<Void>> setMpinWithToken(
 			@RequestHeader(name = "Authorization") String authorization, @Valid @RequestBody MpinRequest request) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(userService.setMpinWithToken(authorization, request));
 	}
 
+	/*
+	 * Verify MPIN
+	 */
+	@Operation(summary = "Verify MPIN for the user", description = "Verifies a 4-digit MPIN using token")
 	@PostMapping("/verify-mpin/{mpin}")
 	public ResponseEntity<ApiResponse<Void>> verifyMpinWithToken(
 			@RequestHeader(name = "Authorization") String authorization, @PathVariable("mpin") String mpin) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(userService.verifyMpinWithToken(authorization, mpin));
 	}
 
+	/*
+	 * Change MPIN
+	 */
+	@Operation(summary = "Change MPIN for the user", description = "Changes MPIN if old MPIN is known")
 	@PostMapping("/change-mpin")
 	public ResponseEntity<ApiResponse<Void>> changeMpinWithToken(
 			@RequestHeader(name = "Authorization") String authorization,
@@ -220,12 +232,20 @@ public class PublicController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(userService.changeMpinWithToken(authorization, request));
 	}
 
+	/*
+	 * Reset MPIN using password
+	 */
+	@Operation(summary = "Reset MPIN using password", description = "Resets MPIN after validating user password")
 	@PostMapping("/reset-mpin")
 	public ResponseEntity<ApiResponse<Void>> resetMpinWithToken(
 			@RequestHeader(name = "Authorization") String authorization, @Valid @RequestBody ResetMpinRequest request) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(userService.resetMpinWithToken(authorization, request));
 	}
 
+	/*
+	 * Register business details for business user
+	 */
+	@Operation(summary = "Register Business user details", description = "Registers additional details for Business users")
 	@PostMapping("/register/business")
 	public ResponseEntity<ApiResponse<Void>> registerBusinessDetailsWithToken(
 			@RequestHeader(name = "Authorization") String authorization,
@@ -234,6 +254,10 @@ public class PublicController {
 				.body(userService.registerBusinessDetailsWithToken(authorization, request));
 	}
 
+	/*
+	 * Register advisor details for advisor user
+	 */
+	@Operation(summary = "Register Advisor user details", description = "Registers additional details for Advisor users")
 	@PostMapping("/register/advisor")
 	public ResponseEntity<ApiResponse<Void>> registerAdvisorDetailsWithToken(
 			@RequestHeader(name = "Authorization") String authorization,

@@ -13,9 +13,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ResetPasswordRequest {
 
-	//@NotBlank(message = "Login ID (User ID / Email / Phone) cannot be blank")
-	//private String loginId;
-
 	@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).{8,}$", message = "Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a digit, and a special character")
 	@NotBlank(message = "New Password cannot be blank")
 	private String newPassword;

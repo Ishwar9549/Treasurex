@@ -14,9 +14,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class RegisterAddressRequest {
 
-	//@NotBlank(message = "Login ID (User ID / Email / Phone) cannot be blank")
-	//private String loginId;
-
 	@NotBlank(message = "Address Line 1 is mandatory")
 	@Size(max = 255, message = "Address Line 1 must be at most 255 characters")
 	private String addressLine1;

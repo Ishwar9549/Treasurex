@@ -15,9 +15,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class RegisterPersonalRequest {
 
-	//@NotBlank(message = "Login ID (User ID / Email / Phone) cannot be blank")
-	//private String loginId;
-
 	@NotBlank(message = "First name cannot be blank")
 	private String firstName;
 
