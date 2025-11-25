@@ -1,0 +1,17 @@
+package com.treasurex.login_service.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+/**
+ * Exception thrown when a requested resource is not found (HTTP 404)
+ */
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class ResourceConflictException extends RuntimeException {
+	private static final long serialVersionUID = 1L;
+
+	public ResourceConflictException(String message) {
+		super(message);
+	}
+}
+//END

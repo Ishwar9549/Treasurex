@@ -1,0 +1,37 @@
+server:
+  port: 9090
+
+spring:
+  application:
+    name: User-Service-1.0.1
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/treasurex_one
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: root
+
+
+        
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: imnavi9999@gmail.com
+    password: axlo gwlk pxjx rjmt
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+treasurex:
+  jwt:
+    secret-key: "uN7t8k2pBqQ9yD4xLrC6vE0jZ5sF3wX1mT8oR2lV7nP4cA9hJ3yG6bM5dQ0zK8sW"
+    registration-expiry-minutes: 15
+    access-expiry-minutes: 60
+
+      
+
+
+

@@ -1,0 +1,37 @@
+{"properties": [
+  {
+    "name": "treasurex.jwt.secret_key",
+    "type": "java.lang.String",
+    "description": "A description for 'treasurex.jwt.secret_key'"
+  },
+  {
+    "name": "treasurex.jwt.registration.expiry-minutes",
+    "type": "java.lang.String",
+    "description": "A description for 'treasurex.jwt.registration.expiry-minutes'"
+  },
+  {
+    "name": "treasurex.jwt.access.expiry-minutes",
+    "type": "java.lang.String",
+    "description": "A description for 'treasurex.jwt.access.expiry-minutes'"
+  },
+  {
+    "name": "treasurex.jwt.secret-key",
+    "type": "java.lang.String",
+    "description": "A description for 'treasurex.jwt.secret-key'"
+  },
+  {
+    "name": "treasurex.jwt.access-expiry-minutes",
+    "type": "java.lang.String",
+    "description": "A description for 'treasurex.jwt.access-expiry-minutes'"
+  },
+  {
+    "name": "treasurex.jwt.registration-expiry-minutes",
+    "type": "java.lang.String",
+    "description": "A description for 'treasurex.jwt.registration-expiry-minutes'"
+  },
+  {
+    "name": "treasurex.jwt.secret-key",
+    "type": "java.lang.String",
+    "description": "A description for 'treasurex.jwt.secret-key'"
+  }
+]}
