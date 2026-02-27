@@ -1,0 +1,20 @@
+server:
+  port: 9090
+
+spring:
+  application:
+    name: payment_gateway_service_1.0.6
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/treasurex_payment_gateway_1
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: root
+
+mybatis:
+  mapper-locations: classpath:/mappers/*.xml
+  type-aliases-package: com.treasurex.app_config.model
+        
+razorpay:
+  keyId: rzp_test_RWu7WwWwg3nhHn
+  keySecret: 9EzQmbYq1zSTy3UYJtQ1juW2

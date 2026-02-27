@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.treasurex.userservice.mapper.AdvisorDetailsMapper">
+
+	<!-- Result mapping for AdvisorDetails entity -->
+	<resultMap id="AdvisorDetailsMap"
+		type="com.treasurex.userservice.model.AdvisorDetails">
+		<id column="id" property="id" />
+		<result column="first_name" property="firstName" />
+		<result column="last_name" property="lastName" />
+		<result column="arn_number" property="arnNumber" />
+		<result column="nominee_name" property="nomineeName" />
+		<result column="nominee_contact_number"
+			property="nomineeContactNumber" />
+		<result column="user_id" property="userId" />
+	</resultMap>
+
+	<!-- Find advisor details by user ID -->
+	<select id="findByUserId" resultMap="AdvisorDetailsMap">
+		SELECT *
+		FROM advisor_details
+		WHERE user_id = #{userId}
+	</select>
+
+	<!-- Insert new advisor details -->
+	<insert id="save"
+		parameterType="com.treasurex.userservice.model.AdvisorDetails"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO advisor_details (
+		first_name, last_name, arn_number,
+		nominee_name, nominee_contact_number, user_id
+		)
+		VALUES (
+		#{firstName}, #{lastName}, #{arnNumber},
+		#{nomineeName}, #{nomineeContactNumber}, #{userId}
+		)
+	</insert>
+
+	<!-- Update existing advisor details -->
+	<update id="update"
+		parameterType="com.treasurex.userservice.model.AdvisorDetails">
+		UPDATE advisor_details
+		SET first_name = #{firstName},
+		last_name = #{lastName},
+		arn_number = #{arnNumber},
+		nominee_name = #{nomineeName},
+		nominee_contact_number = #{nomineeContactNumber}
+		WHERE user_id = #{userId}
+	</update>
+
+</mapper>

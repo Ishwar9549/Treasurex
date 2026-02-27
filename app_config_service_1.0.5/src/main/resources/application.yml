@@ -1,0 +1,26 @@
+# Server configuration
+server:
+  port: 9092
+
+spring:
+  application:
+    # Application name (used in logs, monitoring, discovery if enabled)
+    name: App_Config_Service_1.0.5
+
+  datasource:
+    # PostgreSQL database connection URL
+    url: jdbc:postgresql://localhost:5432/treasurex_app_config_1
+
+    # JDBC driver class
+    driver-class-name: org.postgresql.Driver
+
+    # Database credentials
+    username: postgres
+    password: root
+
+mybatis:
+  # Location of MyBatis mapper XML files
+  mapper-locations: classpath:/mappers/*.xml
+
+  # Package containing model classes for type aliases
+  type-aliases-package: com.treasurex.app_config.model

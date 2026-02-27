@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- MyBatis mapper for AppConfig database operations -->
+<mapper namespace="com.treasurex.app_config.mapper.AppConfigMapper">
+
+	<!-- Result mapping between database columns and AppConfig model -->
+	<resultMap id="AppConfigResultMap"
+		type="com.treasurex.app_config.model.AppConfig">
+		<id column="id" property="id" />
+		<result column="key_name" property="keyName" />
+		<result column="value" property="value" />
+		<result column="description" property="description" />
+		<result column="type" property="type" />
+	</resultMap>
+
+	<!-- Fetch AppConfig by key name -->
+	<select id="findByKeyName" resultMap="AppConfigResultMap">
+		SELECT *
+		FROM app_config
+		WHERE key_name = #{keyName}
+	</select>
+
+	<!-- Fetch all AppConfig records -->
+	<select id="findAll" resultMap="AppConfigResultMap">
+		SELECT *
+		FROM app_config
+	</select>
+
+	<!-- Insert new AppConfig record -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		INSERT
+		INTO app_config (key_name, value, description, type)
+		VALUES (#{keyName}, #{value}, #{description}, #{type})
+	</insert>
+
+	<!-- Update existing AppConfig record -->
+	<update id="update">
+		UPDATE app_config
+		SET
+			value = #{value},
+			description = #{description},
+			type = #{type}
+		WHERE id = #{id}
+	</update>
+
+	<!-- Delete AppConfig record by ID -->
+	<delete id="deleteById">
+		DELETE FROM app_config
+		WHERE id = #{id}
+	</delete>
+
+</mapper>
+<!-- END -->

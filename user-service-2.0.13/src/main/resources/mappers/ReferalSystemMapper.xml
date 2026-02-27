@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.treasurex.userservice.mapper.ReferralSystemMapper">
+
+	<!-- Result mapping for ReferralSystem entity -->
+	<resultMap id="ReferralMap"
+		type="com.treasurex.userservice.model.ReferralSystem">
+		<id column="id" property="id" />
+		<result column="phone_number" property="phoneNumber" />
+		<result column="referral_code" property="referralCode" />
+		<result column="referred_by" property="referredBy" />
+		<result column="referral_count" property="referralCount" />
+		<result column="referral_bonus" property="referralBonus" />
+	</resultMap>
+
+	<!-- Find referral by phone number -->
+	<select id="findByPhoneNumber" resultMap="ReferralMap">
+		SELECT *
+		FROM referral_system
+		WHERE phone_number = #{phoneNumber}
+	</select>
+
+	<!-- Find referral by referral code -->
+	<select id="findByReferralCode" resultMap="ReferralMap">
+		SELECT *
+		FROM referral_system
+		WHERE referral_code = #{referralCode}
+	</select>
+
+	<!-- Insert new referral record -->
+	<insert id="save"
+		parameterType="com.treasurex.userservice.model.ReferralSystem"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO referral_system
+		(phone_number, referral_code, referred_by, referral_count, referral_bonus)
+		VALUES
+		(#{phoneNumber}, #{referralCode}, #{referredBy}, #{referralCount}, #{referralBonus})
+	</insert>
+
+	<!-- Update existing referral record -->
+	<update id="update"
+		parameterType="com.treasurex.userservice.model.ReferralSystem">
+		UPDATE referral_system
+		SET phone_number = #{phoneNumber},
+		referral_code = #{referralCode},
+		referred_by = #{referredBy},
+		referral_count = #{referralCount},
+		referral_bonus = #{referralBonus}
+		WHERE id = #{id}
+	</update>
+
+	<!-- Increment referral stats: count + bonus -->
+	<update id="updateReferralStats">
+		UPDATE referral_system
+		SET referral_count = referral_count + 1,
+		referral_bonus = referral_bonus + 10
+		WHERE id = #{id}
+	</update>
+
+</mapper>

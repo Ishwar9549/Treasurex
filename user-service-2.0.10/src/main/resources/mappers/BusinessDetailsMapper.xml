@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.treasurex.userservice.mapper.BusinessDetailsMapper">
+
+	<!-- Result mapping for BusinessDetails entity -->
+	<resultMap id="BusinessDetailsMap"
+		type="com.treasurex.userservice.model.BusinessDetails">
+		<id column="id" property="id" />
+		<result column="full_name" property="fullName" />
+		<result column="business_name" property="businessName" />
+		<result column="business_phone" property="businessPhone" />
+		<result column="business_place" property="businessPlace" />
+		<result column="pan_number" property="panNumber" />
+		<result column="gst_number" property="gstNumber" />
+		<result column="nominee_name" property="nomineeName" />
+		<result column="nominee_contact_number"
+			property="nomineeContactNumber" />
+		<result column="bank_name" property="bankName" />
+		<result column="account_number" property="accountNumber" />
+		<result column="ifsc_code" property="ifscCode" />
+		<result column="business_web_site" property="businessWebSite" />
+		<result column="business_type" property="businessType" />
+		<result column="bio" property="bio" />
+		<result column="user_id" property="userId" />
+	</resultMap>
+
+	<!-- Find business details by user ID -->
+	<select id="findByUserId" resultMap="BusinessDetailsMap">
+		SELECT *
+		FROM business_details
+		WHERE user_id = #{userId}
+	</select>
+
+	<!-- Insert new business details -->
+	<insert id="save"
+		parameterType="com.treasurex.userservice.model.BusinessDetails"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO business_details (
+		full_name, business_name, business_phone, business_place,
+		pan_number, gst_number, nominee_name, nominee_contact_number,
+		bank_name, account_number, ifsc_code,
+		business_web_site, business_type, bio, user_id
+		)
+		VALUES (
+		#{fullName}, #{businessName}, #{businessPhone}, #{businessPlace},
+		#{panNumber}, #{gstNumber}, #{nomineeName}, #{nomineeContactNumber},
+		#{bankName}, #{accountNumber}, #{ifscCode},
+		#{businessWebSite}, #{businessType}, #{bio}, #{userId}
+		)
+	</insert>
+
+	<!-- Update existing business details -->
+	<update id="update"
+		parameterType="com.treasurex.userservice.model.BusinessDetails">
+		UPDATE business_details
+		SET full_name = #{fullName},
+		business_name = #{businessName},
+		business_phone = #{businessPhone},
+		business_place = #{businessPlace},
+		pan_number = #{panNumber},
+		gst_number = #{gstNumber},
+		nominee_name = #{nomineeName},
+		nominee_contact_number = #{nomineeContactNumber},
+		bank_name = #{bankName},
+		account_number = #{accountNumber},
+		ifsc_code = #{ifscCode},
+		business_web_site = #{businessWebSite},
+		business_type = #{businessType},
+		bio = #{bio}
+		WHERE user_id = #{userId}
+	</update>
+
+</mapper>

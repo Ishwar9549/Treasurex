@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.treasurex.userservice.mapper.UserDetailsMapper">
+
+	<!-- Result mapping for UserDetails entity -->
+	<resultMap id="UserDetailsMap"
+		type="com.treasurex.userservice.model.UserDetails">
+		<id column="id" property="id" />
+		<result column="first_name" property="firstName" />
+		<result column="last_name" property="lastName" />
+		<result column="user_id" property="userId" />
+	</resultMap>
+
+	<!-- Find UserDetails by User ID -->
+	<select id="findByUserId" resultMap="UserDetailsMap">
+		SELECT *
+		FROM user_details
+		WHERE user_id = #{userId}
+	</select>
+
+	<!-- Insert new UserDetails record -->
+	<insert id="save"
+		parameterType="com.treasurex.userservice.model.UserDetails"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO user_details (first_name, last_name, user_id)
+		VALUES (#{firstName}, #{lastName}, #{userId})
+	</insert>
+
+	<!-- Update existing UserDetails record -->
+	<update id="update"
+		parameterType="com.treasurex.userservice.model.UserDetails">
+		UPDATE user_details
+		SET first_name = #{firstName},
+		last_name = #{lastName}
+		WHERE user_id = #{userId}
+	</update>
+
+</mapper>

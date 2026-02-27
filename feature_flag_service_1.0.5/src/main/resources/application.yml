@@ -1,0 +1,26 @@
+# Server configuration
+server:
+  port: 9091
+
+spring:
+  application:
+    # Application name used in logs and monitoring
+    name: Feature_Flag_Service_1.0.5
+
+  datasource:
+    # PostgreSQL database connection URL
+    url: jdbc:postgresql://localhost:5432/treasurex_feature_flag_1
+
+    # JDBC driver
+    driver-class-name: org.postgresql.Driver
+
+    # Database credentials
+    username: postgres
+    password: root
+
+mybatis:
+  # Location of MyBatis mapper XML files
+  mapper-locations: classpath:/mappers/*.xml
+
+  # Package containing FeatureFlag model classes for type aliases
+  type-aliases-package: com.treasurex.feature_flag.model

@@ -1,0 +1,8 @@
+server:
+  port: 9090
+
+spring:
+  application:
+    name: commodities-service-1.0.5
+    
+    

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- MyBatis mapper for FeatureFlag database operations -->
+<mapper
+	namespace="com.treasurex.feature_flag.mapper.FeatureFlagMapper">
+
+	<!-- Result mapping between feature_flag table and FeatureFlag model -->
+	<resultMap id="FeatureFlagResultMap"
+		type="com.treasurex.feature_flag.model.FeatureFlag">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="enabled" column="enabled" />
+		<result property="description" column="description" />
+	</resultMap>
+
+	<!-- Find FeatureFlag by ID -->
+	<select id="findById" parameterType="long"
+		resultMap="FeatureFlagResultMap">
+		SELECT id, name, enabled, description
+		FROM feature_flag
+		WHERE
+		id = #{id}
+	</select>
+
+	<!-- Find FeatureFlag by unique name -->
+	<select id="findByName" parameterType="string"
+		resultMap="FeatureFlagResultMap">
+		SELECT id, name, enabled, description
+		FROM feature_flag
+		WHERE
+		name = #{name}
+	</select>
+
+	<!-- Retrieve all FeatureFlags -->
+	<select id="findAll" resultMap="FeatureFlagResultMap">
+		SELECT id, name, enabled,
+		description
+		FROM feature_flag
+		ORDER BY id DESC
+	</select>
+
+	<!-- Insert new FeatureFlag -->
+	<insert id="save"
+		parameterType="com.treasurex.feature_flag.model.FeatureFlag"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO feature_flag (
+		name,
+		enabled,
+		description
+		) VALUES (
+		#{name},
+		#{enabled},
+		#{description}
+		)
+	</insert>
+
+	<!-- Update existing FeatureFlag -->
+	<update id="update"
+		parameterType="com.treasurex.feature_flag.model.FeatureFlag">
+		UPDATE feature_flag
+		SET
+		enabled = #{enabled},
+		description = #{description}
+		WHERE id = #{id}
+	</update>
+
+	<!-- Delete FeatureFlag by ID -->
+	<delete id="deleteById" parameterType="long">
+		DELETE FROM feature_flag
+		WHERE id = #{id}
+	</delete>
+
+</mapper>

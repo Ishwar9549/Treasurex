@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.treasurex.userservice.mapper.UserMapper">
+
+	<!-- Result mapping for User entity -->
+	<resultMap id="UserResultMap"
+		type="com.treasurex.userservice.model.User">
+		<id column="id" property="id" />
+		<result column="type_of_user" property="typeOfUser" />
+		<result column="phone_number" property="phoneNumber" />
+		<result column="phone_verified" property="phoneVerified" />
+		<result column="password" property="password" />
+		<result column="email" property="email" />
+		<result column="email_verified" property="emailVerified" />
+		<result column="otp" property="otp" />
+		<!-- Enum mapping -->
+		<result column="otp_purpose" property="otpPurpose"
+			javaType="com.treasurex.userservice.dto.OtpPurpose"
+			typeHandler="org.apache.ibatis.type.EnumTypeHandler" />
+		<result column="otp_attempts" property="otpAttempts" />
+		<result column="otp_expiry" property="otpExpiry" />
+		<result column="user_name" property="userName" />
+		<result column="mpin_hash" property="mpinHash" />
+	</resultMap>
+
+	<!-- Find user by phone number -->
+	<select id="findByPhoneNumber" resultMap="UserResultMap">
+		SELECT *
+		FROM users
+		WHERE phone_number = #{phoneNumber}
+	</select>
+
+	<!-- Find user by email -->
+	<select id="findByEmail" resultMap="UserResultMap">
+		SELECT *
+		FROM users
+		WHERE email = #{email}
+	</select>
+
+	<!-- Find user by username -->
+	<select id="findByUserName" resultMap="UserResultMap">
+		SELECT *
+		FROM users
+		WHERE user_name = #{userName}
+	</select>
+
+	<!-- Check if username exists -->
+	<select id="existsByUserName" resultType="boolean">
+		SELECT CASE WHEN COUNT(*) > 0 THEN TRUE ELSE FALSE END
+		FROM users
+		WHERE user_name = #{userName}
+	</select>
+
+	<!-- Insert new user -->
+	<insert id="save"
+		parameterType="com.treasurex.userservice.model.User"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO users (
+		type_of_user,
+		phone_number,
+		phone_verified,
+		password,
+		email,
+		email_verified,
+		otp,
+		otp_purpose,
+		otp_attempts,
+		otp_expiry,
+		user_name,
+		mpin_hash
+		)
+		VALUES (
+		#{typeOfUser},
+		#{phoneNumber},
+		#{phoneVerified},
+		#{password},
+		#{email},
+		#{emailVerified},
+		#{otp},
+		#{otpPurpose, typeHandler=org.apache.ibatis.type.EnumTypeHandler},
+		#{otpAttempts},
+		#{otpExpiry},
+		#{userName},
+		#{mpinHash}
+		)
+	</insert>
+
+	<!-- Update existing user -->
+	<update id="update"
+		parameterType="com.treasurex.userservice.model.User">
+		UPDATE users SET
+		type_of_user = #{typeOfUser},
+		phone_number = #{phoneNumber},
+		phone_verified = #{phoneVerified},
+		password = #{password},
+		email = #{email},
+		email_verified = #{emailVerified},
+		otp = #{otp},
+		otp_purpose = #{otpPurpose, typeHandler=org.apache.ibatis.type.EnumTypeHandler},
+		otp_attempts = #{otpAttempts},
+		otp_expiry = #{otpExpiry},
+		user_name = #{userName},
+		mpin_hash = #{mpinHash}
+		WHERE id = #{id}
+	</update>
+
+</mapper>
